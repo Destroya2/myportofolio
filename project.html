@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Détails du projet - Alexis Digital">
+    <title>Projet | Alexis Digital</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" href="img/profils.webp" type="image/webp">
+    <link rel="shortcut icon" href="img/profils.webp" type="image/webp">
+    <link rel="apple-touch-icon" href="img/profils.webp">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        // Config publique — Supabase en lecture avec la clé ANON uniquement.
+        window.SUPABASE_URL = 'https://wqzpyxqdrtnzbgegbdqk.supabase.co';
+        window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxenB5eHFkcnRuemJnZWdiZHFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzMzE5OTIsImV4cCI6MjEwNTkwNzk5Mn0.VkZgU4uA3P6lhE-k4NsySAskAbNcy0GNWjr_2SmQQzc';
+        window.STORAGE_URL = 'https://porto.iafr-ahd.com/storage';
+        window.API_URL = 'https://porto.iafr-ahd.com';
+    </script>
+    
+</head>
+<body class="project-page">
+    <!-- ============================================
+         NAVIGATION
+         ============================================ -->
+    <header class="header header-project">
+        <nav class="nav">
+            <a href="/" class="nav-logo">Alexis<span>.</span></a>
+            
+            <a href="/#work" class="nav-back">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" 
+                     stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>Retour aux projets</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- ============================================
+         PROJECT CONTENT
+         ============================================ -->
+    <main class="project-main" id="project-main">
+        <!-- Loading State -->
+        <div class="project-loading" id="project-loading">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- Project Content (loaded dynamically) -->
+        <article class="project-content hidden" id="project-content">
+            <!-- Hero Image -->
+            <div class="project-hero">
+                <img src="" alt="" id="project-image" class="project-hero-img">
+            </div>
+
+            <!-- Project Info -->
+            <div class="project-info">
+                <div class="container-narrow">
+                    <header class="project-header">
+                        <span class="project-category" id="project-category"></span>
+                        <h1 class="project-title" id="project-title"></h1>
+                        <time class="project-date" id="project-date"></time>
+                    </header>
+
+                    <div class="project-description" id="project-description">
+                        <!-- Description paragraphs loaded here -->
+                    </div>
+
+                    <!-- Project Meta -->
+                    <aside class="project-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Catégorie</span>
+                            <span class="meta-value" id="meta-category"></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Année</span>
+                            <span class="meta-value" id="meta-year"></span>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- Navigation to other projects -->
+            <nav class="project-navigation">
+                <div class="container">
+                    <a href="/#work" class="project-nav-link">
+                        <span class="nav-label">Voir tous les projets</span>
+                        <span class="nav-arrow">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                                 stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </nav>
+        </article>
+
+        <!-- Error State -->
+        <div class="project-error hidden" id="project-error">
+            <h2>Projet introuvable</h2>
+            <p>Le projet que vous recherchez n'existe pas ou a été supprimé.</p>
+            <a href="/" class="btn-back">Retour à l'accueil</a>
+        </div>
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <span class="footer-logo">Alexis<span>.</span></span>
+                    <p class="footer-tagline">Designer avec intention.</p>
+                </div>
+                
+                <div class="footer-copyright">
+                    <p>© <span id="current-year"></span> Alexis Digital. Tous droits réservés.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="page-transition">
+        <div class="transition-bg"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/image-webp.js"></script>
+    <script src="js/project-page.js"></script>
+</body>
+</html>

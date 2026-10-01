@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Alexis Nikiema - Community Manager & Social Media Manager. Expert en stratégie de contenu, engagement d'audience et design social media.">
+    <title>Alexis Nikiema | Community Manager & Expert Social Media</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/profils.webp" type="image/webp">
+    <link rel="shortcut icon" href="img/profils.webp" type="image/webp">
+    <link rel="apple-touch-icon" href="img/profils.webp">
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        // Config publique — Supabase en lecture avec la clé ANON uniquement.
+        window.SUPABASE_URL = 'https://wqzpyxqdrtnzbgegbdqk.supabase.co';
+        window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxenB5eHFkcnRuemJnZWdiZHFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzMzE5OTIsImV4cCI6MjEwNTkwNzk5Mn0.VkZgU4uA3P6lhE-k4NsySAskAbNcy0GNWjr_2SmQQzc';
+        // Images relatives : toujours servies depuis OVH.
+        window.STORAGE_URL = 'https://porto.iafr-ahd.com/storage';
+        window.API_URL = 'https://porto.iafr-ahd.com';
+    </script>
+    
+</head>
+<body>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="nav-logo">Alexis<span>.</span></a>
+            
+            <div class="nav-menu" id="nav-menu">
+                <a href="#work" class="nav-link">Portfolio</a>
+                <a href="#about" class="nav-link">Expertise</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <nav class="mobile-nav">
+            <a href="#work" class="mobile-nav-link">Portfolio</a>
+            <a href="#about" class="mobile-nav-link">Expertise</a>
+            <a href="#contact" class="mobile-nav-link">Contact</a>
+        </nav>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="hero-line">Je bâtis et j'anime</span>
+                <span class="hero-line">
+                    <em>vos communautés digitales</em>
+                </span>
+            </h1>
+            
+            <p class="hero-intro">
+                Community Manager & Stratège Social Media. J'aide les marques à booster leur engagement et leur visibilité grâce à un storytelling percutant et un design optimisé.
+            </p>
+            
+            <div class="hero-scroll">
+                <span>Découvrir mon univers</span>
+                <div class="scroll-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="work" id="work">
+        <div class="container">
+            <header class="section-header">
+                <span class="section-label">Mes Réalisations</span>
+                <h2 class="section-title">Campagnes & Contenus</h2>
+            </header>
+
+            <div class="work-filters">
+                <button class="filter-tab active" data-filter="all">Tous</button>
+                <button class="filter-tab" data-filter="Graphisme">Social Design</button>
+                <button class="filter-tab" data-filter="Marketing">Stratégie & Ads</button>
+                <button class="filter-tab" data-filter="Développement Mobile">Modération & Vidéo</button>
+            </div>
+
+            <div class="projects-grid" id="projects-grid">
+                </div>
+
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+            </div>
+
+            <div class="empty-state hidden" id="empty-state">
+                <p>Aucune étude de cas dans cette catégorie pour le moment.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-layout">
+                <div class="about-image-col">
+    <div class="about-image">
+        <img src="img/profils.webp" alt="Alexis Nikiema" class="profile-photo">
+    </div>
+</div>
+                
+                <div class="about-content-col">
+                    <span class="section-label">À propos</span>
+                    <h2 class="about-title">
+                        Créer du lien entre les marques et leurs audiences
+                    </h2>
+                    
+                    <div class="about-text">
+                        <p>
+                            Moi c'est Alexis, Community Manager passionné par les nouvelles tendances digitales. Mon approche combine la psychologie de l'audience, la création de contenu visuel et l'analyse de données.
+                        </p>
+                        <p>
+                            Diplômé de <strong>Simplon Africa</strong> et certifié <strong>HubSpot</strong>, je maîtrise l'art de transformer un simple abonné en véritable ambassadeur de marque via une présence sociale cohérente et authentique.
+                        </p>
+                    </div>
+
+                    <div class="about-skills">
+                        <div class="skill-group">
+                            <h4>Social Design</h4>
+                            <p>Création Canva, Reels/TikTok Editor, Copywriting, Branding</p>
+                        </div>
+                        <div class="skill-group">
+                            <h4>Management</h4>
+                            <p>Planning éditorial, Modération, Growth Hacking, Influence</p>
+                        </div>
+                        <div class="skill-group">
+                            <h4>Analyse & SEO</h4>
+                            <p>Reporting KPI, Facebook Ads, SEO Social, Veille stratégique</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-layout">
+                <div class="contact-header">
+                    <span class="section-label">Me contacter</span>
+                    <h2 class="contact-title">
+                        Boostons votre<br><em>visibilité</em>
+                    </h2>
+                    <p class="contact-intro">
+                        Besoin d'un Community Manager pour dynamiser vos réseaux sociaux ? Discutons de vos objectifs et créons une stratégie sur-mesure.
+                    </p>
+                </div>
+
+                <form class="contact-form" id="contact-form">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="name">Nom</label>
+                            <input type="text" id="name" name="name" required placeholder="Votre nom">
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="votre email">
+                        </div>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="subject">Votre besoin principal ?</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Sélectionnez un service</option>
+                            <option value="graphisme">Gestion de réseaux sociaux</option>
+                            <option value="marketing">Création de contenu (Photo/Vidéo)</option>
+                            <option value="mobile">Publicité (Ads)</option>
+                            <option value="other">Audit & Stratégie</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="message">Parlez-moi de votre communauté</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Décrivez vos réseaux actuels, vos cibles..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" style="display: inline-flex; align-items: center; gap: 10px;">
+    <span>Lancer la collaboration</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+</button>
+                    <a href="assets/CV_Alexis_Nikiema.pdf" download="CV_Alexis_Nikiema" class="btn-download">
+        <span>Télécharger mon CV</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+    </a>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <span class="footer-logo">Alexis<span>.</span></span>
+                    <p class="footer-tagline">Expertise Social Media & Engagement.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="https://www.linkedin.com/in/alexis-wendtoin-nikiema191" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://www.facebook.com/share/p/1ZYyooYjSP/" target="_blank" rel="noopener">Instagram</a>
+                </div>
+                
+                <div class="footer-copyright">
+                    <p>© <span id="current-year"></span> Alexis Nikiema. Tous droits réservés.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="page-transition" id="page-transition">
+        <div class="transition-bg"></div>
+    </div>
+
+    <script src="js/api-config.js"></script>
+    <script src="js/image-webp.js"></script>
+    <script src="js/project.js"></script>
+</body>
+</html>

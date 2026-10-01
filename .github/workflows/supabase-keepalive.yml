@@ -1,0 +1,32 @@
+name: Supabase Keepalive (Portfolio)
+
+# Empêche la mise en pause automatique du projet Supabase (inactivité)
+# en effectuant une petite requête de lecture toutes les 8 heures.
+
+on:
+  schedule:
+    - cron: '0 */8 * * *'   # 00:00, 08:00, 16:00 UTC — toutes les 8 h
+  workflow_dispatch:          # permet aussi un déclenchement manuel
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST (table projects)
+        env:
+          # La clé anon est PUBLIQUE (déjà présente dans le front-end) : OK en clair.
+          # Tu peux aussi la mettre dans les Secrets du repo et remplacer par ${{ secrets.SUPABASE_ANON_KEY }}.
+          SUPABASE_URL: 'https://wqzpyxqdrtnzbgegbdqk.supabase.co'
+          SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxenB5eHFkcnRuemJnZWdiZHFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzMzE5OTIsImV4cCI6MjEwNTkwNzk5Mn0.VkZgU4uA3P6lhE-k4NsySAskAbNcy0GNWjr_2SmQQzc'
+        run: |
+          echo "Ping $SUPABASE_URL ..."
+          code=$(curl -sS -o /dev/null -w "%{http_code}" \
+            "$SUPABASE_URL/rest/v1/projects?select=id&limit=1" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY")
+          echo "Réponse HTTP: $code"
+          if [ "$code" -ge 200 ] && [ "$code" -lt 400 ]; then
+            echo "✅ Supabase actif."
+          else
+            echo "❌ Réponse inattendue ($code)"; exit 1
+          fi
