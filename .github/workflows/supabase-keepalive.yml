@@ -1,12 +1,12 @@
 name: Supabase Keepalive (Portfolio)
 
 # Empêche la mise en pause automatique du projet Supabase (inactivité)
-# en effectuant une petite requête de lecture toutes les 30 minutes.
+# en effectuant une petite requête de lecture toutes les 8 heures.
 # Si le projet est déjà suspendu, tente de le réveiller via le health endpoint.
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # toutes les 30 min
+    - cron: '0 */8 * * *'  # toutes les 8 heures (00:00, 08:00, 16:00 UTC)
   workflow_dispatch:          # permet aussi un déclenchement manuel
 
 jobs:
