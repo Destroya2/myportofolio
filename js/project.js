@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadProjects() {
     try {
+        // Warm-up : réveille Supabase si le projet est en pause (cold start).
+        await warmUpSupabase();
+
         const projects = await apiClient.get('/projects');
 
         allProjects = projects || [];
@@ -31,6 +34,58 @@ async function loadProjects() {
     } finally {
         loadingState.classList.add('hidden');
     }
+}
+
+/**
+ * Envoie un ping léger à Supabase pour déclencher le cold start
+ * avant la vraie requête. Affiche un message de progression et
+ * retry automatiquement si le serveur met du temps à répondre.
+ */
+async function warmUpSupabase() {
+    const maxAttempts = 3;
+    const timeoutMs = 8000; // 8s par tentative
+    const loadingText = loadingState.querySelector('.loading-text');
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+            if (loadingText) {
+                loadingText.textContent = attempt === 1
+                    ? 'Connexion au portfolio...'
+                    : `Tentative ${attempt}/${maxAttempts}...`;
+            }
+
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+            const response = await fetch(
+                `${SUPABASE_URL}/rest/v1/projects?select=id&limit=1`,
+                {
+                    headers: {
+                        apikey: SUPABASE_ANON_KEY,
+                        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                    },
+                    signal: controller.signal,
+                }
+            );
+            clearTimeout(timer);
+
+            if (response.ok || response.status < 500) {
+                if (loadingText) loadingText.textContent = 'Chargement des projets...';
+                return; // Supabase est réveillé
+            }
+        } catch (_) {
+            // timeout ou erreur réseau → on retry
+        }
+
+        // Petite pause avant le retry
+        if (attempt < maxAttempts) {
+            await new Promise(r => setTimeout(r, 1000));
+        }
+    }
+
+    // Si on arrive ici, Supabase ne répond toujours pas mais on tente
+    // quand même la requête principale (elle pourrait réussir).
+    if (loadingText) loadingText.textContent = 'Chargement des projets...';
 }
 
 function displayProjects(projects) {
@@ -141,6 +196,15 @@ filterTabs.forEach(tab => {
 
 function navigateToProject(projectId) {
     pageTransition.classList.add('active');
+
+    // Transfère les données du projet via localStorage pour éviter
+    // un cold start Supabase sur la page détail.
+    const project = allProjects.find(p => String(p.id) === String(projectId));
+    if (project) {
+        try {
+            localStorage.setItem('pending_project', JSON.stringify(project));
+        } catch (_) { /* quota exceeded → fallback fetch */ }
+    }
 
     setTimeout(() => {
         window.location.href = `project.html?id=${projectId}`;
