@@ -20,72 +20,55 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loadProjects() {
+    const CACHE_KEY = 'portfolio_projects';
+    const CACHE_MAX_AGE = 30 * 60 * 1000; // 30 min
+
+    // --- 1) Affichage instantané du cache local ---
+    let cached = null;
     try {
-        // Warm-up : réveille Supabase si le projet est en pause (cold start).
-        await warmUpSupabase();
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed.data && (Date.now() - parsed.ts) < CACHE_MAX_AGE) {
+                cached = parsed.data;
+            }
+        }
+    } catch (_) { /* cache corrompu → on ignore */ }
 
-        const projects = await apiClient.get('/projects');
-
-        allProjects = projects || [];
+    if (cached && cached.length > 0) {
+        allProjects = cached;
         displayProjects(allProjects);
+        loadingState.classList.add('hidden');
+        console.log('Projets affichés depuis le cache local');
+    }
+
+    // --- 2) Récupération des données fraîches en arrière-plan ---
+    try {
+        const projects = await apiClient.get('/projects');
+        allProjects = projects || [];
+
+        // Met à jour le cache
+        try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ data: allProjects, ts: Date.now() }));
+        } catch (_) { /* quota */ }
+
+        // Rafraichit l'affichage seulement si on n'avait pas le cache
+        // ou si les données ont changé
+        if (!cached) {
+            displayProjects(allProjects);
+            loadingState.classList.add('hidden');
+        } else {
+            // Re-render silencieux avec les données fraîches
+            displayProjects(allProjects);
+        }
     } catch (err) {
         console.error('Error loading projects:', err);
-        showError();
-    } finally {
-        loadingState.classList.add('hidden');
-    }
-}
-
-/**
- * Envoie un ping léger à Supabase pour déclencher le cold start
- * avant la vraie requête. Affiche un message de progression et
- * retry automatiquement si le serveur met du temps à répondre.
- */
-async function warmUpSupabase() {
-    const maxAttempts = 3;
-    const timeoutMs = 8000; // 8s par tentative
-    const loadingText = loadingState.querySelector('.loading-text');
-
-    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-        try {
-            if (loadingText) {
-                loadingText.textContent = attempt === 1
-                    ? 'Connexion au portfolio...'
-                    : `Tentative ${attempt}/${maxAttempts}...`;
-            }
-
-            const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), timeoutMs);
-
-            const response = await fetch(
-                `${SUPABASE_URL}/rest/v1/projects?select=id&limit=1`,
-                {
-                    headers: {
-                        apikey: SUPABASE_ANON_KEY,
-                        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-                    },
-                    signal: controller.signal,
-                }
-            );
-            clearTimeout(timer);
-
-            if (response.ok || response.status < 500) {
-                if (loadingText) loadingText.textContent = 'Chargement des projets...';
-                return; // Supabase est réveillé
-            }
-        } catch (_) {
-            // timeout ou erreur réseau → on retry
+        if (!cached) {
+            showError();
+            loadingState.classList.add('hidden');
         }
-
-        // Petite pause avant le retry
-        if (attempt < maxAttempts) {
-            await new Promise(r => setTimeout(r, 1000));
-        }
+        // Si on a le cache, on garde l'affichage — pas d'erreur
     }
-
-    // Si on arrive ici, Supabase ne répond toujours pas mais on tente
-    // quand même la requête principale (elle pourrait réussir).
-    if (loadingText) loadingText.textContent = 'Chargement des projets...';
 }
 
 function displayProjects(projects) {
